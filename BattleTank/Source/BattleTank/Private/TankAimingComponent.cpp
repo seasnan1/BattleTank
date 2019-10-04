@@ -61,15 +61,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if (bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Target LOCKED ON!!!"), Time);  
+		auto Time = GetWorld()->GetTimeSeconds();  
 		MoveBarrelTowards(AimDirection);
 	}
-	else
-	{
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Target Out of Range"), Time);
-	}//If not solution found do nothing  
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)

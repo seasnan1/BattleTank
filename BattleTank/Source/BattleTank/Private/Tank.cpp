@@ -5,6 +5,8 @@
 #include "Projectile.h"
 #include "TankTurret.h" //ADDED this too
 #include "Engine/World.h"
+#include "TankMovementComponent.h"
+//#include "Unix/UnixPlatformTime.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -15,6 +17,7 @@ ATank::ATank()
 	
 	//
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	
 }
 
 // Called when the game starts or when spawned
@@ -49,16 +52,17 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::Fire()
 {
-	if (!Barrel)
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	if (Barrel && isReloaded)
 	{
-		return;
-	}
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>
-		(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-		);
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>
+			(
+				ProjectileBlueprint,
+				Barrel->GetSocketLocation(FName("Projectile")),
+				Barrel->GetSocketRotation(FName("Projectile"))
+				);
 
-	Projectile->LaunchProjectile(LaunchSpeed);
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }

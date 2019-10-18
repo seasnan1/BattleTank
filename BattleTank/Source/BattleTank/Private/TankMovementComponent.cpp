@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Traverse Games 2019
 
 
 #include "TankMovementComponent.h"
@@ -23,33 +23,19 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	IntendMoveForward(ForwardThrow);
 
 	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
-	IntendTurnRight(RightThrow);
-
-	//UE_LOG(LogTemp, Warning, TEXT("%s vectoring to %s"), *TankName, *MoveVelocityString)
+	IntendTurnRight(RightThrow);	
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-	//prevent double speed due to double inputs
+	
 }
-
-//void UTankMovementComponent::IntendMoveBackward(float Throw)
-//{
-	//LeftTrack->SetThrottle(-Throw);
-	//RightTrack->SetThrottle(-Throw);
-//}
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
-
-//void UTankMovementComponent::IntendTurnLeft(float Throw)
-//{
-	//LeftTrack->SetThrottle(-Throw);
-	//RightTrack->SetThrottle(Throw);
-//}
 

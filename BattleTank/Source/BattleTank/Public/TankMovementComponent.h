@@ -24,14 +24,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendMoveForward(float Throw);
 
-	//UFUNCTION(BlueprintCallable, Category = Input)
-	//void IntendMoveBackward(float Throw);
-
 	UFUNCTION(BlueprintCallable, Category = Input)
 		void IntendTurnRight(float Throw);
 
-	//UFUNCTION(BlueprintCallable, Category = Input)
-		//void IntendTurnLeft(float Throw);
+	//TODO check best protection
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 private:
 	UTankTrack* LeftTrack = nullptr;
